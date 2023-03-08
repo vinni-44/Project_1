@@ -4,6 +4,6 @@ stages:
     deps:
     - src/get_data.py
     - src/load_data.py
-    - data_given/winequality.csv
+    - data_given/winequality-red.csv
     outs:
-    - data/raw/winequality.csv
+    - data/raw/winequality-red.csv
