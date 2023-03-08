@@ -1,11 +1,11 @@
 schema: '2.0'
 stages:
   load_data:
-    cmd: python src/load_data.py --config=paramal.yaml
+    cmd: python src/load_data.py --config=params.yaml
     deps:
-    - path: data_given/winequality-red.csv
-      md5: 6a883fd98624e18c0b7ce251f4fab4fb
-      size: 100951
+    - path: data_given/winequality.csv
+      md5: ccc8d3507eb151f53f760d36abdef888
+      size: 91998
     - path: src/get_data.py
       md5: c36961ba40a62a4ab56767b9361b1722
       size: 657
@@ -13,22 +13,48 @@ stages:
       md5: 4c4c00773f9b69d2f3828d661b68d7a7
       size: 651
     outs:
-    - path: data/raw/winequality-red.csv
-      md5: b81c95040ccc1f04820095a237ba3c61
-      size: 93485
+    - path: data/raw/winequality.csv
+      md5: d98e8f2eca228c11c4de1cc96866a54d
+      size: 91998
   split_data:
-    cmd: python src/split_data.py --config=paramal.yaml
+    cmd: python src/split_data.py --config=params.yaml
     deps:
-    - path: data/raw/winequality-red.csv
-      md5: b81c95040ccc1f04820095a237ba3c61
-      size: 93485
+    - path: data/raw/winequality.csv
+      md5: d98e8f2eca228c11c4de1cc96866a54d
+      size: 91998
     - path: src/split_data.py
       md5: ad20df2b6f7414f8cfcd5a5e2032415b
       size: 1074
     outs:
-    - path: data/processed/test_winequality-red.csv
-      md5: 420389d6fcceeb7da1311c6b14af875f
-      size: 18836
-    - path: data/processed/train_winequality-red.csv
-      md5: eb194c439f11a763691ae2f66e305d74
-      size: 74795
+    - path: data/processed/test_winequality.csv
+      md5: 01718da3bd6e206060ed00667ca1a389
+      size: 18510
+    - path: data/processed/train_winequality.csv
+      md5: 4bccf4d668cdc60115de42ba74d416ab
+      size: 73633
+  train_evaluate:
+    cmd: python src/train_evaluate.py --config=params.yaml
+    deps:
+    - path: data/processed/test_winequality.csv
+      md5: 01718da3bd6e206060ed00667ca1a389
+      size: 18510
+    - path: data/processed/train_winequality.csv
+      md5: 4bccf4d668cdc60115de42ba74d416ab
+      size: 73633
+    - path: src/train_evaluate.py
+      md5: 0633b2e6e7a4ae002e6e8352192d523e
+      size: 2594
+    params:
+      params.yaml:
+        estimators.ElasticNet.params.alpha: 0.9
+        estimators.ElasticNet.params.l1_ratio: 0.4
+    outs:
+    - path: report/params.json
+      md5: a4aab0167612f21a6085dd05cfafdbf6
+      size: 41
+    - path: report/scores.json
+      md5: 86524820870673b16aeaa90890571e40
+      size: 97
+    - path: saved_models/model.joblib
+      md5: f2c74abd4467f9539a4b4d89b12d4491
+      size: 1263
