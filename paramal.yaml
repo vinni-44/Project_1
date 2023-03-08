@@ -4,7 +4,7 @@ base:
   target_col: TARGET
 
 data_source:
-  s3_source: data_given/winequality.csv
+  s3_source: data_given/winequality-red.csv
 
 load_data:
   raw_dataset_csv: data/raw/winequality.csv
@@ -17,7 +17,7 @@ split_data:
 estimators:
   ElasticNet:
     params:
-      # alpha: 0.88
-      # l1_ratio: 0.89
+      alpha: 0.88
+      l1_ratio: 0.89
 
 model_dir: saved_models
