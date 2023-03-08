@@ -2,3 +2,5 @@ pandas
 scikit-learn
 dvc
 dvc[gdrive]
+pytest 
+tox
