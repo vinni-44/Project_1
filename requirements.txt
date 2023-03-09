@@ -4,3 +4,6 @@ dvc
 dvc[gdrive]
 pytest 
 tox
+flask
+flake8
+gunicorn
