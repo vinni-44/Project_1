@@ -42,6 +42,7 @@ def index():
                 data = [list(map(float,data))]
                 response = predict(data)
                 return render_template("index.html", response=response)
+            
             elif request.json:
                 response = prediction.api_response(request.json)
                 return jsonify(response)
